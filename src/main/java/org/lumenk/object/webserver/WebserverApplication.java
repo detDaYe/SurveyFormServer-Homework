@@ -1,6 +1,8 @@
 package org.lumenk.object.webserver;
 
+import org.lumenk.object.webserver.entities.Form;
 import org.lumenk.object.webserver.entities.User;
+import org.lumenk.object.webserver.repositories.FormRepository;
 import org.lumenk.object.webserver.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,7 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class WebserverApplication implements CommandLineRunner {
 
-	public WebserverApplication(UserRepository userRepository) {
+	public WebserverApplication(FormRepository formRepository, UserRepository userRepository) {
+		this.formRepository = formRepository;
 		this.userRepository = userRepository;
 	}
 
@@ -26,7 +29,17 @@ public class WebserverApplication implements CommandLineRunner {
 
 		userRepository.save(user);
 
+
+		Form from = Form.builder()
+				.owner(user)
+				.build();
+
+		formRepository.save(from);
+
+
+
 	}
 
+	private final FormRepository formRepository;
 	private final UserRepository userRepository;
 }

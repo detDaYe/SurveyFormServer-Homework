@@ -20,9 +20,10 @@ public class User {
 
     public User(){}
 
-    public User(String id, String name) {
+    public User(String id, String name, List<Form> forms) {
         this.id = id;
         this.name = name;
+        this.forms = forms;
     }
 
     public String getId() {
@@ -39,5 +40,13 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Form> getForms() {
+        return forms;
+    }
+
+    public void setForms(List<Form> forms) {
+        this.forms = forms;
     }
 }

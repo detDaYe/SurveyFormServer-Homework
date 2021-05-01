@@ -1,13 +1,15 @@
 package org.lumenk.object.webserver.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import lombok.Builder;
 
+import javax.persistence.*;
+
+@Builder
 @Entity
 public class Form {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(targetEntity = User.class)
@@ -15,8 +17,9 @@ public class Form {
 
     public Form(){}
 
-    public Form(Long id) {
+    public Form(Long id, User owner) {
         this.id = id;
+        this.owner = owner;
     }
 
     public Long getId() {
@@ -27,4 +30,11 @@ public class Form {
         this.id = id;
     }
 
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 }
