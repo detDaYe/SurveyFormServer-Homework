@@ -4,6 +4,8 @@ import lombok.Builder;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 @Builder
@@ -12,6 +14,9 @@ public class User {
     @Id
     private String id;
     private String name;
+
+    @OneToMany(targetEntity = Form.class)
+    private List<Form> forms;
 
     public User(){}
 
