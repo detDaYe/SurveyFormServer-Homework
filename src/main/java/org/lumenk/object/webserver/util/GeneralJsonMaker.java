@@ -23,15 +23,15 @@ public class GeneralJsonMaker {
         return stringBuilder.toString();
     }
 
-    public void addIntAttribute(String name, int value){
+    protected void addIntAttribute(String name, int value){
         addAttribute(name, value + "");
     }
 
-    public void addBooleanAttribute(String name, boolean value){
+    protected void addBooleanAttribute(String name, boolean value){
         addAttribute(name, value ? "true" : "false");
     }
 
-    public void addStringAttribute(String name, String value){
+    protected void addStringAttribute(String name, String value){
         addAttribute(name, "\"" + value + "\"");
     }
 
