@@ -5,8 +5,8 @@ public class ChoiceTypeQuestion extends Question{
     private final boolean hasEssayAnswer;
     private final String[] choices;
 
-    public ChoiceTypeQuestion(String title, boolean required, int maxChoice, boolean hasEssayAnswer, String[] choices) {
-        super(title, required);
+    public ChoiceTypeQuestion(int number, String title, boolean required, int maxChoice, boolean hasEssayAnswer, String[] choices) {
+        super(number, title, required);
         this.maxChoice = maxChoice;
         this.hasEssayAnswer = hasEssayAnswer;
         this.choices = choices;

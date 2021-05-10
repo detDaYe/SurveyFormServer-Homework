@@ -40,8 +40,8 @@ public class WebserverApplication implements CommandLineRunner {
 		formRepository.save(from);
 
 		SurveyFormUtil survey = new SurveyFormUtil();
-		survey.addQuestions(new ChoiceTypeQuestion("do you like math?", true, 2, false, new String[]{"yes", "no"}));
-		survey.addQuestions(new EssayTypeQuestion("how much?", false, 50));
+		survey.addQuestions(new ChoiceTypeQuestion(1, "do you like math?", true, 2, false, new String[]{"yes", "no"}));
+		survey.addQuestions(new EssayTypeQuestion(2, "how much?", false, 50));
 
 		String temp = survey.makeJson();
 		SurveyFormUtil.fromJson(temp);
