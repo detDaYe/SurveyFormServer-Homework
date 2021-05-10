@@ -45,11 +45,11 @@ public class UserCRUDAPI {
     }
 
     @PostMapping("/api/user/delete")
-    public ResponseEntity deleteUserRequest(@PathVariable String id){
-        Optional<User> user = userRepository.findById(id);
+    public ResponseEntity deleteUserRequest(@RequestBody User user){
+        Optional<User> optionalUser = userRepository.findById(user.getId());
 
-        if(user.isPresent()){
-            userRepository.delete(user.get());
+        if(optionalUser.isPresent()){
+            userRepository.delete(optionalUser.get());
             return new ResponseEntity("success", HttpStatus.ACCEPTED);
         }else return new ResponseEntity("user not found", HttpStatus.NO_CONTENT);
     }
