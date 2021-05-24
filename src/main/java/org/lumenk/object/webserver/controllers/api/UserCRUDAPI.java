@@ -32,7 +32,7 @@ public class UserCRUDAPI {
         if(optionalUser.isPresent())
             return new ResponseEntity("user already exists", HttpStatus.BAD_REQUEST);
         userRepository.save(user);
-        return new ResponseEntity("sucess", HttpStatus.ACCEPTED);
+        return new ResponseEntity("success", HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/api/user/update")
@@ -41,7 +41,7 @@ public class UserCRUDAPI {
         if(optionalUser.isEmpty())
             return new ResponseEntity("user not exists", HttpStatus.BAD_REQUEST);
         userRepository.save(user);
-        return new ResponseEntity("sucess", HttpStatus.ACCEPTED);
+        return new ResponseEntity("success", HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/api/user/delete")
