@@ -12,7 +12,7 @@ public class Form {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class, optional = false ,fetch = FetchType.EAGER)
     private User owner;
 
     public Form(){}
@@ -36,5 +36,6 @@ public class Form {
 
     public void setOwner(User owner) {
         this.owner = owner;
+        owner.getForms().add(this);
     }
 }

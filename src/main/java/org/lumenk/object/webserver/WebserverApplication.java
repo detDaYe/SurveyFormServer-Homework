@@ -25,6 +25,23 @@ public class WebserverApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		User user = User.builder()
+				.id("cy_rkpk")
+				.name("romeo")
+				.build();
+		userRepository.save(user);
+
+
+		formRepository.save(Form.builder().owner(user).build());
+		formRepository.save(Form.builder().owner(user).build());
+		formRepository.save(Form.builder().owner(user).build());
+
+		user.getForms().forEach(form -> System.out.println(form.getId()));
+		System.out.println(user.getForms().size());
+
+
+
+
 
 	}
 

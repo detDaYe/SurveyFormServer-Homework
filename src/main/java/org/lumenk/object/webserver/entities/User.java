@@ -2,9 +2,8 @@ package org.lumenk.object.webserver.entities;
 
 import lombok.Builder;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +14,7 @@ public class User {
     private String id;
     private String name;
 
-    @OneToMany(targetEntity = Form.class)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "owner")
     private List<Form> forms;
 
     public User(){}
@@ -23,7 +22,7 @@ public class User {
     public User(String id, String name, List<Form> forms) {
         this.id = id;
         this.name = name;
-        this.forms = forms;
+        this.forms = forms == null ? new ArrayList<>() : forms;
     }
 
     public String getId() {
