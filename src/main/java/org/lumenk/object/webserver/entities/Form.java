@@ -15,11 +15,14 @@ public class Form {
     @ManyToOne(targetEntity = User.class, optional = false ,fetch = FetchType.EAGER)
     private User owner;
 
+    private String title = "NO TITLE";
+
     public Form(){}
 
-    public Form(Long id, User owner) {
+    public Form(Long id, User owner, String title) {
         this.id = id;
         this.owner = owner;
+        this.title = title;
     }
 
     public Long getId() {
@@ -32,6 +35,14 @@ public class Form {
 
     public User getOwner() {
         return owner;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setOwner(User owner) {

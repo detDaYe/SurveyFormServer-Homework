@@ -3,12 +3,16 @@ package org.lumenk.object.webserver.controllers.api;
 import org.lumenk.object.webserver.entities.Form;
 import org.lumenk.object.webserver.entities.dto.FormDto;
 import org.lumenk.object.webserver.repositories.FormRepository;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @RestController
 public class FormCRUDAPI {
@@ -28,5 +32,13 @@ public class FormCRUDAPI {
         for(int i = 0; i < size; i++)
             formDtos[i] = new FormDto(formArrayList.get(i));
         return new ResponseEntity<FormDto[]>(formDtos, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/api/form")
+    public ResponseEntity<FormDto> getForm(@RequestBody Form form){
+        Optional<Form> optionalForm = formRepository.findById(form.getId());
+
+        if(optionalForm.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else return  new ResponseEntity<>(new FormDto(optionalForm.get()), HttpStatus.ACCEPTED);
     }
 }
