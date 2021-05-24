@@ -25,25 +25,6 @@ public class WebserverApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User user = User.builder()
-				.id("yl_rkpk")
-				.name("roemo")
-				.build();
-
-		userRepository.save(user);
-
-
-		Form from = Form.builder()
-				.owner(user)
-				.build();
-
-		formRepository.save(from);
-
-		SurveyFormUtil survey = new SurveyFormUtil();
-		survey.addQuestions(new ChoiceTypeQuestion(1, "do you like math?", true, 2, false, new String[]{"yes", "no"}));
-		survey.addQuestions(new EssayTypeQuestion(2, "how much?", false, 50));
-		String temp = survey.makeJson();
-		SurveyFormUtil.fromJson(temp);
 
 	}
 
