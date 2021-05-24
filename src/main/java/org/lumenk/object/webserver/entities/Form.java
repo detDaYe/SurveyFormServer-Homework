@@ -15,14 +15,14 @@ public class Form {
     @ManyToOne(targetEntity = User.class, optional = false ,fetch = FetchType.EAGER)
     private User owner;
 
-    private String title = "NO TITLE";
+    private String title;
 
     public Form(){}
 
     public Form(Long id, User owner, String title) {
         this.id = id;
         this.owner = owner;
-        this.title = title;
+        this.title = title == null ? "NO TITLE" : title;
     }
 
     public Long getId() {
