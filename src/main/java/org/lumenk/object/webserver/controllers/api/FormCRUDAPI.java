@@ -31,19 +31,20 @@ public class FormCRUDAPI {
         FormDto[] formDtos = new FormDto[size];
         for(int i = 0; i < size; i++)
             formDtos[i] = new FormDto(formArrayList.get(i));
-        return new ResponseEntity<FormDto[]>(formDtos, HttpStatus.ACCEPTED);
+        return new ResponseEntity<FormDto[]>(formDtos, HttpStatus.OK);
     }
 
     @GetMapping("/api/form/get")
     public ResponseEntity<FormDto> getForm(@RequestBody Form form){
         Optional<Form> optionalForm = formRepository.findById(form.getId());
 
-        if(optionalForm.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        else return  new ResponseEntity<>(new FormDto(optionalForm.get()), HttpStatus.ACCEPTED);
+        if(optionalForm.isEmpty()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        else return  new ResponseEntity<>(new FormDto(optionalForm.get()), HttpStatus.OK);
     }
 
     @PostMapping("/api/form/add")
-    public ResponseEntity<String> addForm(@RequestBody Form form){
-        return new ResponseEntity<>("success", HttpStatus.ACCEPTED);
+    public ResponseEntity<String> addForm(@RequestBody FormDto formDto){
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
