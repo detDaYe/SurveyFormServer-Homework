@@ -8,6 +8,7 @@ import org.lumenk.object.webserver.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -21,7 +22,7 @@ public class FormCreateAPI {
     private UserRepository userRepository;
 
     @PostMapping("/api/form/create")
-    public ResponseEntity<String> formCreate(@RequestParam("owner") String owner, @RequestParam("title") String title){
+    public ResponseEntity<String> formCreate(@RequestParam("owner") String owner, @Nullable @RequestParam("title") String title){
 
         if(null == owner)
             return new ResponseEntity<>("user CANNOT be NULL", HttpStatus.BAD_REQUEST);

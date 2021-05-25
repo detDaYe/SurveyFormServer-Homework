@@ -43,6 +43,6 @@ public class FormDeleteAPI {
             return new ResponseEntity<>("You are not own this Form", HttpStatus.BAD_REQUEST);
 
         formRepository.delete(form);
-        return new ResponseEntity<>("deleted", HttpStatus.RESET_CONTENT);
+        return new ResponseEntity<>("deleted", HttpStatus.OK);
     }
 }
