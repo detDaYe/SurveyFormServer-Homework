@@ -1,4 +1,4 @@
-package org.lumenk.object.webserver.controllers.api;
+package org.lumenk.object.webserver.controllers.api.formcurd;
 
 import org.lumenk.object.webserver.entities.Form;
 import org.lumenk.object.webserver.entities.User;
