@@ -11,9 +11,18 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.File;
+
 @SpringBootApplication
 public class WebserverApplication implements CommandLineRunner {
 
+	public static String getQuestionPath(long id){
+		return "form/" + id;
+	}
+
+	public static String getAnswerPath(long id){
+		return "answer/" + id;
+	}
 	public WebserverApplication(FormRepository formRepository, UserRepository userRepository) {
 		this.formRepository = formRepository;
 		this.userRepository = userRepository;
@@ -25,6 +34,12 @@ public class WebserverApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+
+		File formFolder = new File("form");
+		File answerFolder = new File("answer");
+		if(!formFolder.exists()) formFolder.mkdir();
+		if(!answerFolder.exists()) answerFolder.mkdir();
+
 		User user = User.builder()
 				.id("rkpk")
 				.name("romeo")
