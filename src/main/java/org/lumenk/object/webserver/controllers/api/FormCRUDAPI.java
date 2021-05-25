@@ -46,7 +46,7 @@ public class FormCRUDAPI {
         else return  new ResponseEntity<>(new FormDto(optionalForm.get()), HttpStatus.OK);
     }
 
-    @PostMapping("/api/form/add")
+    /*@PostMapping("/api/form/add")
     public ResponseEntity<String> addForm(@RequestBody FormDto formDto){
 
         if(null != formDto.getId())
@@ -65,6 +65,7 @@ public class FormCRUDAPI {
 
         return new ResponseEntity<>("성공적으로 등록되었습니다", HttpStatus.CREATED);
     }
+     */
 
     @PostMapping("/api/form/delete")
     public ResponseEntity<String> deleteForm(@RequestBody FormDto formDto){
