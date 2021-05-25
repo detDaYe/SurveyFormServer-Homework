@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
 import java.util.Optional;
 
 @RestController
@@ -41,6 +42,10 @@ public class FormDeleteAPI {
 
         if(!form.getOwner().getId().equals(user.getId()))
             return new ResponseEntity<>("You are not own this Form", HttpStatus.BAD_REQUEST);
+
+
+        File file = new File("form/" + form.getId().toString());
+        file.delete();
 
         formRepository.delete(form);
         return new ResponseEntity<>("deleted", HttpStatus.OK);
