@@ -11,6 +11,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 @SpringBootApplication
 public class WebserverApplication implements CommandLineRunner {
 
@@ -30,6 +35,18 @@ public class WebserverApplication implements CommandLineRunner {
 				.name("romeo")
 				.build();
 		userRepository.save(user);
+
+		File file = new File("test.txt");
+
+		try{
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+			writer.append("hello");
+			writer.close();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+
+
 
 	}
 
