@@ -67,6 +67,7 @@ public class FormCRUDAPI {
     }
      */
 
+    /*
     @PostMapping("/api/form/delete")
     public ResponseEntity<String> deleteForm(@RequestBody FormDto formDto){
         if(null == formDto.getId())
@@ -88,4 +89,6 @@ public class FormCRUDAPI {
         formRepository.delete(optionalForm.get());
         return new ResponseEntity<>("성공적으로 삭제되었습니다", HttpStatus.OK);
     }
+
+     */
 }
