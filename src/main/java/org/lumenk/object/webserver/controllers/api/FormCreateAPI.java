@@ -8,10 +8,7 @@ import org.lumenk.object.webserver.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -23,28 +20,22 @@ public class FormCreateAPI {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/api/form/create/{owner}")
-    public ResponseEntity<String> formCreate(@RequestBody FormDto formDto,
-                                             @PathVariable("owner") String ownerID){
-        if(null == ownerID)
-            return new ResponseEntity<String>("owner ID cannot be NULL", HttpStatus.BAD_REQUEST);
+    @PostMapping("/api/form/create")
+    public ResponseEntity<String> formCreate(@RequestParam("owner") String owner, @RequestParam("title") String title){
 
-        Optional<User> optionalUser = userRepository.findById(ownerID);
+        if(null == owner)
+            return new ResponseEntity<>("user CANNOT be NULL", HttpStatus.BAD_REQUEST);
 
+        Optional<User> optionalUser = userRepository.findById(owner);
         if(optionalUser.isEmpty())
-            return new ResponseEntity<String>("owner does not exists", HttpStatus.BAD_REQUEST);
-
-        if(null != formDto.getId())
-            return new ResponseEntity<>("when create new form, form ID MUST be null", HttpStatus.BAD_REQUEST);
-
+            return new ResponseEntity<>("user not found", HttpStatus.BAD_REQUEST);
         Form form = Form.builder()
                 .owner(optionalUser.get())
-                .title(formDto.getTitle())
+                .title(title == null ? "NO TITLE" : title)
                 .build();
 
         formRepository.save(form);
-
-        return new ResponseEntity<String>("form created", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("created", HttpStatus.CREATED);
 
     }
 }
