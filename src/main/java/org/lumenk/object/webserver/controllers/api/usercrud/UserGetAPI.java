@@ -1,31 +1,33 @@
-package org.lumenk.object.webserver.controllers.api;
+package org.lumenk.object.webserver.controllers.api.usercrud;
 
 import org.lumenk.object.webserver.entities.User;
+import org.lumenk.object.webserver.entities.dto.UserDto;
 import org.lumenk.object.webserver.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.Access;
 import java.util.Optional;
 
 @RestController
-public class UserDeleteAPI {
+public class UserGetAPI {
 
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/api/user/delete/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") String id){
+    @GetMapping("/api/user/get/{id}")
+    public ResponseEntity<UserDto> userGet(@PathVariable("id") String id){
         if(null == id)
-            return new ResponseEntity<>("id MUST NOT BE NULL", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
         Optional<User> optionalUser = userRepository.findById(id);
         if(optionalUser.isEmpty())
-            return new ResponseEntity<>("user not exists", HttpStatus.BAD_REQUEST);
-        userRepository.delete(optionalUser.get());
-        return new ResponseEntity<>("deleted", HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(new UserDto(optionalUser.get()), HttpStatus.OK);
+
     }
 }

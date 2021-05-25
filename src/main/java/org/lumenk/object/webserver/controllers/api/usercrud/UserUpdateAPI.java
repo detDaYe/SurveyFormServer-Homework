@@ -1,4 +1,4 @@
-package org.lumenk.object.webserver.controllers.api;
+package org.lumenk.object.webserver.controllers.api.usercrud;
 
 import org.lumenk.object.webserver.entities.User;
 import org.lumenk.object.webserver.repositories.UserRepository;
