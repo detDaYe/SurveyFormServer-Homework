@@ -26,7 +26,7 @@ public class AnswerCreateAPI {
     @Autowired
     private FormRepository formRepository;
 
-    @PostMapping("/api/answer/{id}")
+    @PostMapping("/api/answer/create/{id}")
     public ResponseEntity<String> answerCreate(@RequestBody Answer[] answers, @PathVariable("id") Long formID){
 
         if(null == formID)
