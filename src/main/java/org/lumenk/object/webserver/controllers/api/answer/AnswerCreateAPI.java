@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -51,7 +51,10 @@ public class AnswerCreateAPI {
                 .build();
 
         try {
-            FileWriter writer = new FileWriter("answer/" + answer.getId().toString());
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(
+                            new FileOutputStream("answer/" + answer.getId()), StandardCharsets.UTF_8));
+
             Gson gson = new Gson();
             writer.write(gson.toJson(answers));
         } catch (IOException e) {

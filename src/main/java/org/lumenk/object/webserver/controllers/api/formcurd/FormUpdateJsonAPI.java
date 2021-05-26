@@ -15,9 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -47,7 +46,11 @@ public class FormUpdateJsonAPI {
 
         Gson gson = new Gson();
         try {
-            FileWriter fileWriter = new FileWriter("form" + id);
+            BufferedWriter fileWriter = new BufferedWriter(
+                    new OutputStreamWriter(
+                            new FileOutputStream("form/" + id), StandardCharsets.UTF_8));
+
+
             fileWriter.write(gson.toJson(questions));
             fileWriter.close();
         } catch (IOException e) {

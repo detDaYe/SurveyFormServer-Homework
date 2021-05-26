@@ -1,6 +1,7 @@
 package org.lumenk.object.webserver.controllers.api.formcurd;
 
 import com.google.gson.Gson;
+import org.apache.catalina.connector.OutputBuffer;
 import org.lumenk.object.webserver.entities.Form;
 import org.lumenk.object.webserver.entities.User;
 import org.lumenk.object.webserver.entities.dto.FormDto;
@@ -15,9 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -53,7 +53,13 @@ public class FormCreateAPI {
 
         form = formRepository.findById(form.getId()).get();
         try {
-            FileWriter writer = new FileWriter("form/" + form.getId().toString());
+
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(
+                            new FileOutputStream("form/" + form.getId()), StandardCharsets.UTF_8));
+
+
+
             Gson gson = new Gson();
             writer.write(gson.toJson(questions));
             writer.close();
