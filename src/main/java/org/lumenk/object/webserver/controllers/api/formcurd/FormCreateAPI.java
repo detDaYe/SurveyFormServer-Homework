@@ -6,8 +6,10 @@ import org.lumenk.object.webserver.entities.User;
 import org.lumenk.object.webserver.entities.dto.FormDto;
 import org.lumenk.object.webserver.repositories.FormRepository;
 import org.lumenk.object.webserver.repositories.UserRepository;
+import org.lumenk.object.webserver.util.JsonUtil;
 import org.lumenk.object.webserver.util.questions.Question;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -27,8 +30,13 @@ public class FormCreateAPI {
     private UserRepository userRepository;
 
     @PostMapping("/api/form/create")
-    public ResponseEntity<String> formCreate(@RequestBody Question[] questions, @RequestParam("owner") String owner,
+    public ResponseEntity<String> formCreate(HttpEntity<String> httpEntity, @RequestParam("owner") String owner,
                                              @Nullable @RequestParam("title") String title){
+
+        String[] strings = JsonUtil.splitToArray(Objects.requireNonNull(httpEntity.getBody()));
+        Question[] questions = new Question[strings.length];
+        for(int i = 0; i < strings.length; i++)
+            questions[i] = Question.fromJson(strings[i]);
 
         if(null == owner)
             return new ResponseEntity<>("user CANNOT be NULL", HttpStatus.BAD_REQUEST);
@@ -45,7 +53,7 @@ public class FormCreateAPI {
 
         form = formRepository.findById(form.getId()).get();
         try {
-            FileWriter writer = new FileWriter(new File("form/" + form.getId().toString()));
+            FileWriter writer = new FileWriter("form/" + form.getId().toString());
             Gson gson = new Gson();
             writer.write(gson.toJson(questions));
             writer.close();

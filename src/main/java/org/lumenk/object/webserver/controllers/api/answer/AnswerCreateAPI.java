@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import org.lumenk.object.webserver.entities.Form;
 import org.lumenk.object.webserver.repositories.AnswerRepository;
 import org.lumenk.object.webserver.repositories.FormRepository;
+import org.lumenk.object.webserver.util.JsonUtil;
 import org.lumenk.object.webserver.util.answers.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -27,7 +30,13 @@ public class AnswerCreateAPI {
     private FormRepository formRepository;
 
     @PostMapping("/api/answer/create/{id}")
-    public ResponseEntity<String> answerCreate(@RequestBody Answer[] answers, @PathVariable("id") Long formID){
+    public ResponseEntity<String> answerCreate(HttpEntity<String> httpEntity, @PathVariable("id") Long formID){
+
+        String[] strings = JsonUtil.splitToArray(Objects.requireNonNull(httpEntity.getBody()));
+        Answer[] answers = new Answer[strings.length];
+
+        for(int i = 0; i < strings.length; i++)
+            answers[i] = Answer.fromJson(strings[i]);
 
         if(null == formID)
             return new ResponseEntity<>("form ID cannot be null", HttpStatus.BAD_REQUEST);

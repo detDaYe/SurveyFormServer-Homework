@@ -6,8 +6,10 @@ import org.lumenk.object.webserver.entities.Form;
 import org.lumenk.object.webserver.entities.User;
 import org.lumenk.object.webserver.repositories.FormRepository;
 import org.lumenk.object.webserver.repositories.UserRepository;
+import org.lumenk.object.webserver.util.JsonUtil;
 import org.lumenk.object.webserver.util.questions.Question;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -28,7 +31,13 @@ public class FormUpdateJsonAPI {
     private FormRepository formRepository;
 
     @PostMapping("/api/form/updatejson/{id}")
-    public ResponseEntity<String> updateFormJson(@RequestBody Question[] questions, @PathVariable Long id){
+    public ResponseEntity<String> updateFormJson(HttpEntity<String> httpEntity, @PathVariable Long id){
+
+        String[] strings = JsonUtil.splitToArray(Objects.requireNonNull(httpEntity.getBody()));
+        Question[] questions = new Question[strings.length];
+        for(int i = 0; i < strings.length; i++)
+            questions[i] = Question.fromJson(strings[i]);
+
         if(null == id)
             return new ResponseEntity<>("id cannot be null", HttpStatus.BAD_REQUEST);
 
@@ -38,7 +47,7 @@ public class FormUpdateJsonAPI {
 
         Gson gson = new Gson();
         try {
-            FileWriter fileWriter = new FileWriter("form" + id.toString());
+            FileWriter fileWriter = new FileWriter("form" + id);
             fileWriter.write(gson.toJson(questions));
             fileWriter.close();
         } catch (IOException e) {

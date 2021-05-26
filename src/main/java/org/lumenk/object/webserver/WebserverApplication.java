@@ -1,12 +1,15 @@
 package org.lumenk.object.webserver;
 
+import com.google.gson.Gson;
 import org.lumenk.object.webserver.entities.Form;
 import org.lumenk.object.webserver.entities.User;
 import org.lumenk.object.webserver.repositories.FormRepository;
 import org.lumenk.object.webserver.repositories.UserRepository;
+import org.lumenk.object.webserver.util.JsonUtil;
 import org.lumenk.object.webserver.util.SurveyFormUtil;
 import org.lumenk.object.webserver.util.questions.ChoiceTypeQuestion;
 import org.lumenk.object.webserver.util.questions.EssayTypeQuestion;
+import org.lumenk.object.webserver.util.questions.Question;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -40,11 +43,20 @@ public class WebserverApplication implements CommandLineRunner {
 		if(!formFolder.exists()) formFolder.mkdir();
 		if(!answerFolder.exists()) answerFolder.mkdir();
 
-		User user = User.builder()
-				.id("rkpk")
-				.name("romeo")
-				.build();
-		userRepository.save(user);
+		Question[] questions = new Question[]{
+				new ChoiceTypeQuestion(1, "밥 뭐먹음?", true, 1, false,
+						new String[]{"치킨", "마라탕", "중국집", "수학책", "공학책", "계산기"}),
+				new EssayTypeQuestion(2, "소감 말해보셈", true, 120)
+		};
+
+		Gson gson = new Gson();
+
+		String jsonString = gson.toJson(questions);
+		System.out.println(jsonString);
+
+		String[] arr = JsonUtil.splitToArray(jsonString);
+		for(int i = 0; i < arr.length; i++)
+			System.out.println(arr[i]);
 
 	}
 
