@@ -43,21 +43,6 @@ public class WebserverApplication implements CommandLineRunner {
 		if(!formFolder.exists()) formFolder.mkdir();
 		if(!answerFolder.exists()) answerFolder.mkdir();
 
-		Question[] questions = new Question[]{
-				new ChoiceTypeQuestion(1, "밥 뭐먹음?", true, 1, false,
-						new String[]{"치킨", "마라탕", "중국집", "수학책", "공학책", "계산기"}),
-				new EssayTypeQuestion(2, "소감 말해보셈", true, 120)
-		};
-
-		Gson gson = new Gson();
-
-		String jsonString = gson.toJson(questions);
-		System.out.println(jsonString);
-
-		String[] arr = JsonUtil.splitToArray(jsonString);
-		for(int i = 0; i < arr.length; i++)
-			System.out.println(arr[i]);
-
 	}
 
 	private final FormRepository formRepository;
