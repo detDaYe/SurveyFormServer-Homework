@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @RestController
@@ -31,7 +29,11 @@ public class FormJsonGetAPI {
             return new ResponseEntity<>("id not found", HttpStatus.BAD_REQUEST);
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("form/" + optionalForm.get().getId().toString()));
+            //BufferedReader reader = new BufferedReader(new FileReader("form/" + optionalForm.get().getId().toString()));
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(
+                            new FileInputStream("form/" + optionalForm.get().getId()),StandardCharsets.UTF_8));
+
             String result = reader.readLine();
             reader.close();
             return new ResponseEntity<>(result, HttpStatus.OK);
