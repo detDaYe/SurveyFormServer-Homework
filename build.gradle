@@ -11,7 +11,7 @@ sourceCompatibility = '11'
 bootJar{
 	archivesBaseName = 'SurveyProjectWebServer'
 	archiveFileName = 'SurveyServer.jar'
-	archiveVersion = 'v0.0.1'
+	archiveVersion = 'v0.0.2'
 }
 
 repositories {
