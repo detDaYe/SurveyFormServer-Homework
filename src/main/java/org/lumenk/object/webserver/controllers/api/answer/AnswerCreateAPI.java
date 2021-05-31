@@ -49,6 +49,8 @@ public class AnswerCreateAPI {
                 org.lumenk.object.webserver.entities.Answer.builder()
                 .question(optionalForm.get())
                 .build();
+        answerRepository.save(answer);
+        System.out.println(answer.getId());
 
         try {
             BufferedWriter writer = new BufferedWriter(
@@ -57,12 +59,13 @@ public class AnswerCreateAPI {
 
             Gson gson = new Gson();
             writer.write(gson.toJson(answers));
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
-        answerRepository.save(answer);
+
         return new ResponseEntity<>("created", HttpStatus.CREATED);
     }
 }
